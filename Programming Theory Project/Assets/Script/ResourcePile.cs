@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 /// <summary>
 /// A subclass of Building that produce resource at a constant rate.
@@ -26,9 +27,27 @@ public class ResourcePile : Building
             }
         } // setter uses backing field
     }
-
+    [System.Serializable]
+    public class SaveObj
+    {
+        public InventoryEntry ResourceEntry;
+    }
     private float m_CurrentProduction = 0.0f;
+    private void Awake()
+    {
+        SaveObj data;
+        data = LoadData();
+        
+        if (data.ResourceEntry != null)
+        {
+            int SecondsElapsed = Epoch.SecondsElapsed(data.ResourceEntry.LastUpdate);
+            //Debug.Log(Epoch.SecondsElapsed(data.ResourceEntry.LastUpdate));
 
+            float amountProducedOffLine = Mathf.RoundToInt((float)SecondsElapsed / m_ProductionSpeed);
+
+            AddItem(Item.Id, (int)amountProducedOffLine + data.ResourceEntry.Count);
+        }        
+    }
     private void Update()
     {
         if (m_CurrentProduction > 1.0f)
@@ -50,5 +69,36 @@ public class ResourcePile : Building
     {
         return $"Producing at the speed of {m_ProductionSpeed}/s";
 
+    }
+
+    public override void SaveData()
+    {
+        int found = m_Inventory.FindIndex(item => item.ResourceId == Item.Id);
+        //Debug.Log(found);
+        if (found != -1)
+        {
+            SaveObj data = new SaveObj();
+            data.ResourceEntry = m_Inventory[found];
+
+            string json = JsonUtility.ToJson(data);
+            //Debug.Log(Application.persistentDataPath);
+            File.WriteAllText(Application.persistentDataPath + "/resources/"+ Item.Id + ".json", json);
+        }
+    }
+
+    public SaveObj LoadData()
+    {
+        string path = Application.persistentDataPath + "/resources/" + Item.Id + ".json";
+        SaveObj data;
+        if (File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
+            data = JsonUtility.FromJson<SaveObj>(json);
+        }
+        else
+        {
+            data = new SaveObj();
+        }
+        return data;
     }
 }
