@@ -26,7 +26,7 @@ public abstract class Building : MonoBehaviour,
 
             return Mathf.Abs(difference);
         }
-
+        // POLYMORPHISM - OVERLOADING
         public static int SecondsElapsed(int t1, int t2)
         {
             int difference = t1 - t2;

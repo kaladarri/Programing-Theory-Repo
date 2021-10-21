@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class UIMainScene : MonoBehaviour
 {
+    // ENCAPSULATION
     public static UIMainScene Instance { get; private set; }
 
     public interface IUIInfoContent

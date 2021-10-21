@@ -7,6 +7,7 @@ using System.IO;
 /// <summary>
 /// A subclass of Building that produce resource at a constant rate.
 /// </summary>
+/// INHERITANCE
 public class ResourcePile : Building
 {
     public ResourceItem Item;
@@ -36,15 +37,15 @@ public class ResourcePile : Building
     private void Awake()
     {
         SaveObj data;
+        // ABSTRACTION
         data = LoadData();
         
         if (data.ResourceEntry != null)
         {
+            // ABSTRACTION
             int SecondsElapsed = Epoch.SecondsElapsed(data.ResourceEntry.LastUpdate);
-            //Debug.Log(Epoch.SecondsElapsed(data.ResourceEntry.LastUpdate));
-
             float amountProducedOffLine = Mathf.RoundToInt((float)SecondsElapsed / m_ProductionSpeed);
-
+            // ABSTRACTION
             AddItem(Item.Id, (int)amountProducedOffLine + data.ResourceEntry.Count);
         }        
     }
@@ -70,7 +71,7 @@ public class ResourcePile : Building
         return $"Producing at the speed of {m_ProductionSpeed}/s";
 
     }
-
+    // POLYMORPHISM - OVERRIDE
     public override void SaveData()
     {
         int found = m_Inventory.FindIndex(item => item.ResourceId == Item.Id);
