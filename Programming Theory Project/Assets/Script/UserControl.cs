@@ -8,7 +8,7 @@ public class UserControl : MonoBehaviour
     public Camera GameCamera;
     public GameObject CameraMove;
     public float PanSpeed = 10.0f;
-    private float offsetCameraX = 25;
+    private float offsetCameraX = 15;
     private Vector3 cameraDestinyPoint;  
 
     
@@ -35,16 +35,15 @@ public class UserControl : MonoBehaviour
     public void HandleSelection()
     {
         var ray = GameCamera.ScreenPointToRay(Input.mousePosition);
-        Debug.Log(ray);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
-            Debug.Log(hit.point);
-        }
+            cameraDestinyPoint = new Vector3(hit.point.x, 15, hit.point.z);
+            CameraMove.GetComponent<CameraMove>().GoTo(cameraDestinyPoint);
 
-        cameraDestinyPoint = new Vector3(hit.point.x, 15, hit.point.z);
-        CameraMove.GetComponent<CameraMove>().GoTo(cameraDestinyPoint);
-        //GameCamera.GetComponent<CameraMove>().GoTo(cameraDestinyPoint);
+            var uiInfo = hit.collider.GetComponentInParent<UIMainScene.IUIInfoContent>();
+            UIMainScene.Instance.SetNewInfoContent(uiInfo);
+        }
     }
     
 }

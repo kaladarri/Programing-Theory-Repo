@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class CameraMove : MonoBehaviour
 {
     protected NavMeshAgent m_Agent;
-    private float PanSpeed = 10.0f;
+    private float PanSpeed = 50.0f;
     protected void Awake()
     {
         m_Agent = GetComponent<NavMeshAgent>();
