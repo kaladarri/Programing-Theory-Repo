@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System.IO;
 
 /// <summary>
 /// Base class for building on the map that hold a Resource inventory and that can be interacted with by Unit.
@@ -126,24 +125,8 @@ public abstract class Building : MonoBehaviour,
         content.AddRange(m_Inventory);
     }
 
-    [System.Serializable]
-    class SaveObj
+    public virtual void SaveData()
     {
-        public InventoryEntry wood;
-    }
-
-    public void SaveData()
-    {
-        int found = m_Inventory.FindIndex(item => item.ResourceId == "wood");
-        //Debug.Log(found);
-        if (found != -1)
-        {            
-            SaveObj data = new SaveObj();
-            data.wood = m_Inventory[found];
-
-            string json = JsonUtility.ToJson(data);
-            Debug.Log(Application.persistentDataPath);
-            File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
-        }
+        
     }
 }
