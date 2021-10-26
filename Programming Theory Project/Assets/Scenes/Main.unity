@@ -650,7 +650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14749f096e8873b49956b21363b2e515, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InventorySpace: 100
+  InventorySpace: -1
   Item: {fileID: 11400000, guid: 2f3a9774348f5f14580965d135763703, type: 2}
 --- !u!1 &456436223
 GameObject:
@@ -1436,7 +1436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14749f096e8873b49956b21363b2e515, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InventorySpace: 100
+  InventorySpace: -1
   Item: {fileID: 11400000, guid: 83ba0211eb7782c47aa37b471b0811cf, type: 2}
 --- !u!1 &1778241835
 GameObject:
